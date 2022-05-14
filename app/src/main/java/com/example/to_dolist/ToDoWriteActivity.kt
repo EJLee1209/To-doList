@@ -1,10 +1,15 @@
 package com.example.to_dolist
 
+import android.app.Activity
+import android.app.ActivityManager
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
 import androidx.core.widget.doAfterTextChanged
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ToDoWriteActivity : AppCompatActivity() {
     var content: String = ""
+    lateinit var context: Context
     lateinit var contentEditText: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +43,17 @@ class ToDoWriteActivity : AppCompatActivity() {
             header["Authorization"] = "token " + token!!
             retrofitService.makeToDo(header, body).enqueue(object : Callback<Any> {
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
-
+                    onBackPressed()
                 }
 
                 override fun onFailure(call: Call<Any>, t: Throwable) {
-
+                    onBackPressed()
                 }
             })
         }
 
 
     }
+
+
 }
